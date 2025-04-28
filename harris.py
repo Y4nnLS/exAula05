@@ -17,7 +17,7 @@ harris_configs = [
 ]
 
 # Pasta para salvar os resultados
-output_dir = "resultados_tarefa_pratica_v2"
+output_dir = "resultados_tarefa_pratica_v2/harris"
 os.makedirs(output_dir, exist_ok=True)
 
 def carregar_imagem(caminho):
