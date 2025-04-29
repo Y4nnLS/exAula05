@@ -3,7 +3,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-# Lista de imagens de teste
+
 imagens_entrada = [
     "imagem1note.jpg",
     "imagem2sala.jpg",
@@ -11,12 +11,12 @@ imagens_entrada = [
 ]
 
 shi_tomasi_configs = [
-    {"maxCorners": 100, "qualityLevel": 0.01, "minDistance": 10},  # Detecta tudo
-    {"maxCorners": 50, "qualityLevel": 0.05, "minDistance": 20},   # Médio
-    {"maxCorners": 20, "qualityLevel": 0.1, "minDistance": 30},    # Só cantos fortes
+    {"maxCorners": 100, "qualityLevel": 0.01, "minDistance": 10},  
+    {"maxCorners": 50, "qualityLevel": 0.05, "minDistance": 20},   
+    {"maxCorners": 20, "qualityLevel": 0.1, "minDistance": 30},    
 ]
 
-# Pasta para salvar os resultados
+
 output_dir = "resultados_tarefa_pratica_v2/shi_tomasi"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -56,16 +56,16 @@ def processar_imagem(imagem_path):
     imagem_nome = os.path.splitext(os.path.basename(imagem_path))[0]
     imagem = carregar_imagem(imagem_path)
 
-    # Shi-Tomasi para cada configuração
+    
     for idx, config in enumerate(shi_tomasi_configs):
         nome_saida = os.path.join(output_dir, f"{imagem_nome}_shi_tomasi_cfg{idx}.jpg")
         aplicar_shi_tomasi(imagem, **config, nome_saida=nome_saida)
 
-    # SIFT
+    
     nome_sift = os.path.join(output_dir, f"{imagem_nome}_sift.jpg")
     aplicar_sift(imagem, nome_sift)
 
-    # ORB
+    
     nome_orb = os.path.join(output_dir, f"{imagem_nome}_orb.jpg")
     aplicar_orb(imagem, nome_orb)
 
@@ -74,14 +74,14 @@ def processar_imagem(imagem_path):
 def mostrar_resultados_shi_tomasi_em_blocos():
     imagens_shi = []
 
-    # Coleta todos os caminhos das imagens Shi-Tomasi
+    
     for imagem_path in imagens_entrada:
         imagem_nome = os.path.splitext(os.path.basename(imagem_path))[0]
         for idx in range(3):
             caminho_imagem = os.path.join(output_dir, f"{imagem_nome}_shi_tomasi_cfg{idx}.jpg")
             imagens_shi.append((imagem_nome, idx, caminho_imagem))
 
-    # Mostra de 3 em 3
+    
     for i in range(0, len(imagens_shi), 3):
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
         fig.suptitle('Detecção de Cantos - Shi-Tomasi (Bloco)', fontsize=16)
@@ -95,15 +95,15 @@ def mostrar_resultados_shi_tomasi_em_blocos():
             ax.axis('off')
 
         plt.tight_layout()
-        plt.show()  # Espera você fechar a janela para mostrar o próximo bloco
+        plt.show()  
 
-# Execução principal
+
 if __name__ == "__main__":
-    # Primeiro, processa todas as imagens
+    
     for imagem_path in imagens_entrada:
         processar_imagem(imagem_path)
 
-    # Depois, exibe as imagens em blocos de 3
+    
     mostrar_resultados_shi_tomasi_em_blocos()
 
     print("\nTodos os resultados foram salvos em 'resultados_tarefa_pratica_v2'.")

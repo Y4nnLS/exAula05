@@ -3,7 +3,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-# Lista de imagens de teste
+
 imagens_entrada = [
     "imagem1note.jpg",
     "imagem2sala.jpg",
@@ -11,12 +11,12 @@ imagens_entrada = [
 ]
 
 harris_configs = [
-    {"blockSize": 2, "ksize": 3, "k": 0.04},   # Detecta tudo, até ruído
-    {"blockSize": 5, "ksize": 5, "k": 0.05},   # Médio, equilibrado
-    {"blockSize": 9, "ksize": 7, "k": 0.06},   # Só pega cantos bem fortes
+    {"blockSize": 2, "ksize": 3, "k": 0.04},   
+    {"blockSize": 5, "ksize": 5, "k": 0.05},   
+    {"blockSize": 9, "ksize": 7, "k": 0.06},   
 ]
 
-# Pasta para salvar os resultados
+
 output_dir = "resultados_tarefa_pratica_v2/harris"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -49,16 +49,16 @@ def processar_imagem(imagem_path):
     imagem_nome = os.path.splitext(os.path.basename(imagem_path))[0]
     imagem = carregar_imagem(imagem_path)
 
-    # Harris para cada configuração
+    
     for idx, config in enumerate(harris_configs):
         nome_saida = os.path.join(output_dir, f"{imagem_nome}_harris_cfg{idx}.jpg")
         aplicar_harris(imagem, **config, nome_saida=nome_saida)
 
-    # SIFT
+    
     nome_sift = os.path.join(output_dir, f"{imagem_nome}_sift.jpg")
     aplicar_sift(imagem, nome_sift)
 
-    # ORB
+    
     nome_orb = os.path.join(output_dir, f"{imagem_nome}_orb.jpg")
     aplicar_orb(imagem, nome_orb)
 
@@ -67,14 +67,14 @@ def processar_imagem(imagem_path):
 def mostrar_resultados_harris_em_blocos():
     imagens_harris = []
 
-    # Coleta todos os caminhos das imagens Harris
+    
     for imagem_path in imagens_entrada:
         imagem_nome = os.path.splitext(os.path.basename(imagem_path))[0]
         for idx in range(3):
             caminho_imagem = os.path.join(output_dir, f"{imagem_nome}_harris_cfg{idx}.jpg")
             imagens_harris.append((imagem_nome, idx, caminho_imagem))
 
-    # Mostra de 3 em 3
+    
     for i in range(0, len(imagens_harris), 3):
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
         fig.suptitle('Detecção de Cantos - Harris (Bloco)', fontsize=16)
@@ -87,15 +87,15 @@ def mostrar_resultados_harris_em_blocos():
             ax.axis('off')
 
         plt.tight_layout()
-        plt.show()  # Espera você fechar a janela para mostrar o próximo bloco
+        plt.show()  
 
-# Execução principal
+
 if __name__ == "__main__":
-    # Primeiro, processa todas as imagens
+    
     for imagem_path in imagens_entrada:
         processar_imagem(imagem_path)
 
-    # Depois, exibe as imagens em blocos de 3
+    
     mostrar_resultados_harris_em_blocos()
 
     print("\n✅ Todos os resultados foram salvos em 'resultados_tarefa_pratica_v2'.")
